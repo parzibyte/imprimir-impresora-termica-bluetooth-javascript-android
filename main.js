@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const URLPlugin = "http://192.168.1.76:8000"; // Si el plugin no está en local, coloca la IP. Por ejemplo 192.168.1.76:8000
+    const URLPlugin = "http://localhost:8000"; // Si el plugin no está en local, coloca la IP. Por ejemplo 192.168.1.76:8000
 
     const $btnImprimir = document.querySelector("#btnImprimir"),
         $licencia = document.querySelector("#licencia"),
