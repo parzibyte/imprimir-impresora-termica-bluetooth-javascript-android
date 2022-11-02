@@ -1,37 +1,19 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    const URLPlugin = "http://localhost:8000"; // Si el plugin no está en local, coloca la IP. Por ejemplo 192.168.1.76:8000
+    const URLPlugin = "http://192.168.1.76:8000"; // Si el plugin no está en local, coloca la IP. Por ejemplo 192.168.1.76:8000
 
-    const $listaDeImpresoras = document.querySelector("#listaDeImpresoras"),
-        $btnImprimir = document.querySelector("#btnImprimir"),
+    const $btnImprimir = document.querySelector("#btnImprimir"),
         $licencia = document.querySelector("#licencia"),
-        $contenedorListaImpresoras = document.querySelector("#contenedorListaImpresoras");
+        $impresora = document.querySelector("#impresora");
 
     $btnImprimir.addEventListener("click", () => {
-        const direccionMacDeLaImpresora = $listaDeImpresoras.value;
+        const direccionMacDeLaImpresora = $impresora.value;
         const licencia = $licencia.value;
         if (!direccionMacDeLaImpresora) {
-            return alert("Por favor seleccione una impresora. Si no hay ninguna, asegúrese de haberla emparejado al dispositivo y que la misma esté encendida")
+            return alert("Por favor escribe la MAC de la impresora")
         }
         demostrarCapacidades(direccionMacDeLaImpresora, licencia);
     });
-    const init = async () => {
-        $contenedorListaImpresoras.classList.add("is-loading");
-        $btnImprimir.disabled = true;
-        try {
-            const impresoras = await ConectorEscposAndroid.obtenerImpresoras(URLPlugin);
-            for (const impresora of impresoras) {
-                $listaDeImpresoras.appendChild(Object.assign(document.createElement("option"), {
-                    value: impresora.mac,
-                    text: `${impresora.nombre} (${impresora.mac})`,
-                }));
-            }
-        } catch (e) {
-            alert("Error obteniendo lista de impresoras: " + e.message);
-        } finally {
-            $contenedorListaImpresoras.classList.remove("is-loading");
-            $btnImprimir.disabled = false;
-        }
-    }
+
     const demostrarCapacidades = async (macImpresora, licencia) => {
         const conector = new ConectorEscposAndroid(licencia, URLPlugin);
         conector
@@ -74,8 +56,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             .Pulso(48, 60, 120)
 
         try {
-            $btnImprimir.disabled = true;
-            $contenedorListaImpresoras.classList.add("is-loading");
             const respuesta = await conector.imprimirEn(macImpresora);
             if (respuesta === true) {
                 alert("Impreso correctamente");
@@ -84,10 +64,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (e) {
             alert("Error imprimiendo: " + e.message);
-        } finally {
-            $contenedorListaImpresoras.classList.remove("is-loading");
-            $btnImprimir.disabled = false;
         }
     }
-    init();
 });
