@@ -46,6 +46,14 @@ const ConectorEscposAndroid = (() => {
             this.operaciones.push(new ConectorPlugin.Operacion("CargarImagenLocalEImprimir", Array.from(arguments)));
             return this;
         }
+        CorteCompletoUno() {
+            this.operaciones.push(new ConectorPlugin.Operacion("CorteCompletoUno"));
+            return this;
+        }
+        CorteCompletoDos() {
+            this.operaciones.push(new ConectorPlugin.Operacion("CorteCompletoDos"));
+            return this;
+        }
         Corte(lineas) {
             this.operaciones.push(new ConectorPlugin.Operacion("Corte", Array.from(arguments)));
             return this;
