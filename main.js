@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         conector
             .Iniciar()
             .EstablecerAlineacion(ConectorEscposAndroid.ALINEACION_CENTRO)
-            .DescargarImagenDeInternetEImprimir("https://parzibyte.me/static/mariposas_cempoalxochitl_dithering.png", 0, 216)
+            .DescargarImagenDeInternetEImprimir("https://parzibyte.me/static/mariposas_cempoalxochitl_dithering.png", 0, 320)
             .Iniciar() // En mi impresora debo invocar a "Iniciar" después de imprimir una imagen
             .EstablecerAlineacion(ConectorEscposAndroid.ALINEACION_CENTRO)
             .Feed(1)
